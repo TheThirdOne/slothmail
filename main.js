@@ -99,7 +99,7 @@ function sendtolist(){
   getText(function (data){
     sendgrid.send({
         to:       'benjaminrlanders@gmail.com',
-        from:     'sloths@sendgrid.com',
+        from:     'sloths@slothmail.com',
         bcc:      subscribers,
         subject:  'Sloth HoroScope',
         html:     '<p>'+full(data,['?','.','!'])+'</p>\n\n <br><br><img src="http://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif"></img>'
