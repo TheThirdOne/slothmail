@@ -81,6 +81,30 @@ app.get('/send/', function(req, res){
     })
   
 });
+var subscribers = [];
+app.get('/subscribe/', function(req, res){
+  if(req.query.email){
+      subscribers.push(req.query.email);
+      console.log(subscribers);
+      res.send('Success')
+  }else
+  res.send('Needs an email')
+});
+function sendtolist(){
+  getText(function (data){
+    sendgrid.send({
+        to:       'benjaminrlanders@gmail.com',
+        from:     'sloths@sendgrid.com',
+        bcc:      subscribers,
+        subject:  'Sloth HoroScope',
+        html:     '<p>'+full(data,['?','.','!'])+'</p>\n\n <br><br><img src="http://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif"></img>'
+      }, function(err, json) {
+        if (err) { return console.error(err); }
+        console.log(json);
+      });
+  });  
+}
+setInterval(sendtolist,(10*1000));
 app.listen(3000);
 exports.getText = getText;
 exports.full = full;
