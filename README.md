@@ -35,6 +35,6 @@ RESTful api?
 ------------
 Kindof. Its one url.
 
-```/send/?email=youremail@example.com```  
+/send/?email=youremail@example.com
 
 
