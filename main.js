@@ -90,6 +90,7 @@ app.get('/subscribe/', function(req, res){
   }else
   res.send('Needs an email')
 });
+
 function sendtolist(){
   getText(function (data){
     sendgrid.send({
@@ -104,7 +105,16 @@ function sendtolist(){
       });
   });  
 }
-setInterval(sendtolist,(10*1000));
+process.on('SIGINT', function () {
+    console.log(subscribers);
+    process.exit();
+});
+process.on('uncaughtException',function(e){
+    console.log(e.stack);
+    console.log(subscribers);
+    process.exit();
+});
+setInterval(sendtolist,(1*60*60*1000));
 app.listen(3000);
 exports.getText = getText;
 exports.full = full;
