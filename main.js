@@ -46,13 +46,18 @@ function full(str,del){
   return out.join(' ');
 }
 function getText(callback){
-  fs = require('fs')
-  fs.readFile('./test', 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
-  callback(data);
-});
+  http = require('http');
+  http.get({hostname:'www.horoscope.com', port:80, path:'/', agent:false}).on('response', function (response) {
+    var body = '';
+    var i = 0;
+    response.on('data', function (chunk) {
+        i++;
+        body += chunk;
+    });
+    response.on('end', function () {
+      callback(/\>.*</.exec(/id=\"textline\".*</.exec(body)[0])[0].slice(1,-1));
+    });
+  });
 }
 var sendgrid  = require('sendgrid')(process.argv[2], process.argv[3]);
 getText(function(data){
