@@ -67,7 +67,7 @@ var app = express();
 app.get('/send', function(req, res){
   if(req.query.email)
     getText(function (data){
-      console.log(req.query.email)
+    console.log(req.query.email);
     sendgrid.send({
       to:       req.query.email,
       from:     'sloths@sendgrid.com',
@@ -78,7 +78,7 @@ app.get('/send', function(req, res){
       console.log(json);
       res.send('Success');
     });
-    })
+    });
   
 });
 var subscribers = [];
@@ -86,9 +86,9 @@ app.get('/subscribe', function(req, res){
   if(req.query.email){
       subscribers.push(req.query.email);
       console.log(subscribers);
-      res.send('Success')
+      res.send('Success');
   }else
-  res.send('Needs an email')
+  res.send('Needs an email');
 });
 
 function sendtolist(){
