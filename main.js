@@ -60,14 +60,27 @@ function getText(callback){
   });
 }
 var sendgrid  = require('sendgrid')(process.argv[2], process.argv[3]);
-getText(function(data){
-  sendgrid.send({
-    to:       'benjaminrlanders@gmail.com',
-    from:     'example@example.com',
-    subject:  'Sloth',
-    text:     full(data,['?','.','!'])
-  }, function(err, json) {
-    if (err) { return console.error(err); }
-    console.log(json);
-  });
+
+var express = require('express');
+var app = express();
+
+app.get('/app/', function(req, res){
+  if(req.query.email)
+    getText(function (data){
+      console.log(req.query.email)
+    sendgrid.send({
+      to:       req.query.email,
+      from:     'sloths@sendgrid.com',
+      subject:  'Sloth HoroScope',
+      html:     '<p>'+full(data,['?','.','!'])+'</p>\n\n <br><br><img src="http://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif"></img>'
+    }, function(err, json) {
+      if (err) { return console.error(err); }
+      console.log(json);
+      res.send('Success');
+    });
+    })
+  
 });
+app.listen(3000);
+exports.getText = getText;
+exports.full = full;
