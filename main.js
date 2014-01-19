@@ -90,6 +90,10 @@ app.get('/subscribe', function(req, res){
   }else
   res.send('Needs an email');
 });
+app.get('/sendtoall', function(req, res){
+    sendtolist();  
+    res.send('Success');
+});
 
 function sendtolist(){
   getText(function (data){
