@@ -45,7 +45,24 @@ function full(str,del){
   }
   return out.join(' ');
 }
-//console.log('Input: Hello, how are you? I am well. You? Awesome!')
-//console.log('Output: My sloth said "'+splitMultiple('Hello, how are you? I am well. You? Awesome!',['.','?','!']).join('" Then my sloth said "')+'" The End');
-
-console.log(full('Hey sign up for our service. It is super cool and will change your life. You should sign up now, and give us your first born child.',['?','!','.']));
+function getText(callback){
+  fs = require('fs')
+  fs.readFile('./test', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  callback(data);
+});
+}
+var sendgrid  = require('sendgrid')(process.argv[2], process.argv[3]);
+getText(function(data){
+  sendgrid.send({
+    to:       'benjaminrlanders@gmail.com',
+    from:     'example@example.com',
+    subject:  'Sloth',
+    text:     full(data,['?','.','!'])
+  }, function(err, json) {
+    if (err) { return console.error(err); }
+    console.log(json);
+  });
+});
