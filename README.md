@@ -6,7 +6,7 @@ Why?
 
 The better question is why not.   
 ![Why not sloth](https://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif)   
-Have you ever felt that their aren't enough sloths in your life? MailSloth is made to prevent that. 
+Have you ever felt that their aren't enough sloths in your life? SlothMail is made to prevent that. 
 Just imagine an inbox filled with glorious sloths. (and related merchandise).
 MailSloth can currently give you a sloth horoscope if you use the RESTful api. In the future, you will subscripe via the api and the get daily sloth horoscopes.
 
@@ -33,8 +33,8 @@ Easy right?
 
 RESTful api?
 ------------
-Kindof. Its one url.
+Kindof.
 
-/send/?email=youremail@example.com
-
+/send?email=youremail@example.com
+/subscribe?email=youremail@example.com
 
