@@ -1,4 +1,4 @@
-MailSloth
+SlothMail
 =========
 
 Why?

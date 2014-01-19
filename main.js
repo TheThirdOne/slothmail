@@ -64,7 +64,7 @@ var sendgrid  = require('sendgrid')(process.argv[2], process.argv[3]);
 var express = require('express');
 var app = express();
 
-app.get('/send/', function(req, res){
+app.get('/send', function(req, res){
   if(req.query.email)
     getText(function (data){
       console.log(req.query.email)
@@ -82,7 +82,7 @@ app.get('/send/', function(req, res){
   
 });
 var subscribers = [];
-app.get('/subscribe/', function(req, res){
+app.get('/subscribe', function(req, res){
   if(req.query.email){
       subscribers.push(req.query.email);
       console.log(subscribers);
@@ -115,6 +115,6 @@ process.on('uncaughtException',function(e){
     process.exit();
 });
 setInterval(sendtolist,(1*60*60*1000));
-app.listen(3000);
+app.listen(80);
 exports.getText = getText;
 exports.full = full;
