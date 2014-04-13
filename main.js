@@ -64,6 +64,8 @@ var sendgrid  = require('sendgrid')(process.argv[2], process.argv[3]);
 var express = require('express');
 var app = express();
 
+app.use(express.static(__dirname + '/static'));
+
 app.get('/send', function(req, res){
   if(req.query.email)
     getText(function (data){
