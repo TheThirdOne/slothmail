@@ -66,21 +66,27 @@ var app = express();
 
 app.use(express.static(__dirname + '/static'));
 
+app.use(function(req,res,next){
+        console.log(req.ip,req.originalUrl);
+        next();
+});
+
 app.get('/send', function(req, res){
   if(req.query.email)
     getText(function (data){
-    console.log(req.query.email);
-    sendgrid.send({
-      to:       req.query.email,
-      from:     'sloths@sendgrid.com',
-      subject:  'Sloth HoroScope',
-      html:     '<p>'+full(data,['?','.','!'])+'</p>\n\n <br><br><img src="http://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif"></img>',
-      text:     full(data,['?','.','!'])+'\n\nhttp://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif'
-    }, function(err, json) {
-      if (err) { return console.error(err); }
-      console.log(json);
-      res.send('Success');
-    });
+      
+      sendgrid.send({
+        to:       req.query.email,
+        from:     'sloths@sendgrid.com',
+        subject:  'Sloth HoroScope',
+        html:     '<p>'+full(data,['?','.','!'])+'</p>\n\n <br><br><img src="http://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif"></img>',
+        text:     full(data,['?','.','!'])+'\n\nhttp://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif'
+      }, function(err, json) {
+        if (err) { return console.error(err); }
+        console.log('Mail sent to:', req.query.email);
+        console.log(json);
+        res.send('Success');
+      });
     });
   
 });
@@ -88,10 +94,10 @@ var subscribers = [];
 app.get('/subscribe', function(req, res){
   if(req.query.email){
       subscribers.push(req.query.email);
-      console.log(subscribers);
+      console.log(subscribers.join(', '));
       res.send('Success');
   }else
-  res.send('Needs an email');
+    res.send('Needs an email');
 });
 app.get('/sendtoall', function(req, res){
     sendtolist();  
@@ -109,6 +115,7 @@ function sendtolist(){
         text:     full(data,['?','.','!'])+'\n\nhttp://3.bp.blogspot.com/-BscDUZYDpQY/URs3ZCdVMNI/AAAAAAAAyb8/lSwKX9C4A7M/s1600/2.gif'
       }, function(err, json) {
         if (err) { return console.error(err); }
+        console.log('Group mail sent');
         console.log(json);
       });
   });  
