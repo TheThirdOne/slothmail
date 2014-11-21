@@ -35,6 +35,6 @@ RESTful api?
 ------------
 Kindof.
 
-/send?email=youremail@example.com   
+/send?email=youremail@penis.com   
 /subscribe?email=youremail@example.com
 
